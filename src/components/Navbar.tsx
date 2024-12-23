@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import SignInForm from './auth/SignInForm';
+import SignUpForm from './auth/SignUpForm';
 import MobileMenu from './navbar/MobileMenu';
 import DesktopMenu from './navbar/DesktopMenu';
 import Logo from './navbar/Logo';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -23,6 +25,30 @@ const Navbar = () => {
     };
   }, []);
 
+  const AuthDialog = () => (
+    <Dialog>
+      <DialogTrigger asChild>
+        <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-sm font-medium">
+          Sign In
+        </button>
+      </DialogTrigger>
+      <DialogContent>
+        <Tabs defaultValue="signin" className="w-full">
+          <TabsList className="grid w-full grid-cols-2">
+            <TabsTrigger value="signin">Sign In</TabsTrigger>
+            <TabsTrigger value="signup">Sign Up</TabsTrigger>
+          </TabsList>
+          <TabsContent value="signin">
+            <SignInForm />
+          </TabsContent>
+          <TabsContent value="signup">
+            <SignUpForm />
+          </TabsContent>
+        </Tabs>
+      </DialogContent>
+    </Dialog>
+  );
+
   return (
     <>
       {/* Mobile Navbar */}
@@ -40,16 +66,7 @@ const Navbar = () => {
             <Menu className="h-6 w-6 text-primary" />
           </button>
         </div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-sm font-medium">
-              Sign In
-            </button>
-          </DialogTrigger>
-          <DialogContent>
-            <SignInForm />
-          </DialogContent>
-        </Dialog>
+        <AuthDialog />
       </nav>
 
       {/* Desktop Navbar */}
@@ -64,7 +81,10 @@ const Navbar = () => {
           </div>
           
           {/* Desktop Menu */}
-          <DesktopMenu />
+          <div className="flex items-center gap-4">
+            <DesktopMenu />
+            <AuthDialog />
+          </div>
         </div>
       </nav>
 

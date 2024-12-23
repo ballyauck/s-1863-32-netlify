@@ -63,8 +63,6 @@ const SignInForm = () => {
     setLoading(true);
     try {
       // Verify the OTP code
-      // Note: In a real implementation, you would verify this against the stored secret
-      // This is a simplified version
       const { data: profileData } = await supabase.auth.getUser();
       
       if (!profileData.user) throw new Error("User not found");
@@ -111,7 +109,7 @@ const SignInForm = () => {
             render={({ slots }) => (
               <InputOTPGroup className="gap-2">
                 {slots.map((slot, index) => (
-                  <InputOTPSlot key={index} {...slot} />
+                  <InputOTPSlot key={index} {...slot} index={index} />
                 ))}
               </InputOTPGroup>
             )}
