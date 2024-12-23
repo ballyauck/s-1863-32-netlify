@@ -35,17 +35,17 @@ const AuthDialog = () => {
 
   if (isLoggedIn) {
     return (
-      <div className="flex items-center gap-4">
+      <div className="flex flex-col items-start gap-2">
         <Link 
           to="/profile" 
-          className="text-sm font-medium text-primary hover:underline"
+          className="text-sm font-medium text-primary hover:underline w-full text-left"
         >
           {displayName || "My Profile"}
         </Link>
         <Button 
           variant="ghost" 
           onClick={handleSignOut}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-sm font-medium"
+          className="w-full p-2 hover:bg-gray-100 rounded-lg transition-colors text-sm font-medium"
         >
           Sign Out
         </Button>
