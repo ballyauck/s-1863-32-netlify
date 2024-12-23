@@ -57,8 +57,10 @@ const Navbar = () => {
           isScrolled ? 'bg-white shadow-sm' : 'bg-transparent'
         }`}
       >
-        <Logo />
-        <div className="flex items-center justify-center flex-grow">
+        <div className="flex-shrink-0 ml-2">
+          <Logo />
+        </div>
+        <div className="flex items-center justify-center gap-4 flex-grow px-4">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
@@ -66,7 +68,9 @@ const Navbar = () => {
             <Menu className="h-6 w-6 text-primary" />
           </button>
         </div>
-        <AuthDialog />
+        <div className="flex-shrink-0 mr-2">
+          <AuthDialog />
+        </div>
       </nav>
 
       {/* Desktop Navbar */}
