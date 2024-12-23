@@ -10,14 +10,16 @@ const Navbar = () => {
               className="w-full h-full object-contain"
             />
           </div>
-          <span className="font-bold text-xl text-[#dd2526]">Yuccan Technologies</span>
+          <span className="font-bold text-xl text-[#dd2526]" style={{ fontFamily: 'Bank Gothic Medium BT' }}>
+            YUCCAN TECHNOLOGIES
+          </span>
         </div>
         
         <div className="hidden md:flex items-center gap-8">
-          <a href="#enterprise" className="text-[#141413] hover:text-[#141413]/80 transition-colors">Enterprise</a>
-          <a href="#pricing" className="text-[#141413] hover:text-[#141413]/80 transition-colors">Pricing</a>
-          <a href="#docs" className="text-[#141413] hover:text-[#141413]/80 transition-colors">Docs</a>
-          <a href="#faq" className="text-[#141413] hover:text-[#141413]/80 transition-colors">FAQ</a>
+          <a href="#about" className="text-[#141413] hover:text-[#141413]/80 transition-colors">About</a>
+          <a href="#services" className="text-[#141413] hover:text-[#141413]/80 transition-colors">Services</a>
+          <a href="#solutions" className="text-[#141413] hover:text-[#141413]/80 transition-colors">Solutions</a>
+          <a href="#contact" className="text-[#141413] hover:text-[#141413]/80 transition-colors">Contact Us</a>
         </div>
 
         <button className="text-[#141413] font-medium hover:text-[#141413]/80 transition-colors">
