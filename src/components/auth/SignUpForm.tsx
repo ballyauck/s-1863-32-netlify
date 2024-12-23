@@ -9,6 +9,7 @@ const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -24,15 +25,34 @@ const SignUpForm = () => {
       return;
     }
 
+    if (!displayName.trim()) {
+      toast({
+        title: "Error",
+        description: "Display name is required",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
         password,
       });
 
-      if (error) throw error;
+      if (signUpError) throw signUpError;
+
+      if (!signUpData.user) throw new Error("No user data returned");
+
+      // Update the profile with the display name
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({ display_name: displayName.trim() })
+        .eq('id', signUpData.user.id);
+
+      if (profileError) throw profileError;
 
       toast({
         title: "Success",
@@ -51,6 +71,17 @@ const SignUpForm = () => {
 
   return (
     <form onSubmit={handleSignUp} className="space-y-4">
+      <div className="space-y-2">
+        <Label htmlFor="displayName">Display Name</Label>
+        <Input
+          id="displayName"
+          type="text"
+          placeholder="Enter your display name"
+          value={displayName}
+          onChange={(e) => setDisplayName(e.target.value)}
+          required
+        />
+      </div>
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>
         <Input
@@ -87,7 +118,7 @@ const SignUpForm = () => {
       <Button 
         type="submit" 
         className="w-full" 
-        disabled={loading || !password || password !== confirmPassword}
+        disabled={loading || !password || password !== confirmPassword || !displayName.trim()}
       >
         {loading ? "Signing up..." : "Sign up"}
       </Button>
