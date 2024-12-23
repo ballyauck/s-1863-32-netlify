@@ -35,7 +35,7 @@ const AuthDialog = () => {
 
   if (isLoggedIn) {
     return (
-      <div className="flex flex-col items-start gap-2 space-y-1">
+      <div className="flex flex-col items-start gap-1 space-y-0">
         <Link 
           to="/profile" 
           className="text-sm font-medium text-primary hover:underline w-full text-left"
