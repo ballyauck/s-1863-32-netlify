@@ -11,6 +11,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { ProfileAvatar } from "@/components/profile/ProfileAvatar";
 import { ProfileFormFields } from "@/components/profile/ProfileForm";
 import { ProfileFormValues, ThemePreference } from "@/types/profile";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const formSchema = z.object({
   display_name: z.string().min(2, "Display name must be at least 2 characters"),
@@ -98,28 +100,32 @@ const Profile = () => {
   }
 
   return (
-    <div className="container max-w-2xl py-10">
-      <Card>
-        <CardHeader>
-          <CardTitle>Profile Settings</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ProfileAvatar 
-            avatarUrl={form.watch("avatar_url")}
-            displayName={form.watch("display_name")}
-            email={user?.email}
-          />
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <div className="flex-grow container max-w-2xl py-20">
+        <Card>
+          <CardHeader>
+            <CardTitle>Profile Settings</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ProfileAvatar 
+              avatarUrl={form.watch("avatar_url")}
+              displayName={form.watch("display_name")}
+              email={user?.email}
+            />
 
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <ProfileFormFields form={form} />
-              <Button type="submit" className="w-full">
-                Save Changes
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <ProfileFormFields form={form} />
+                <Button type="submit" className="w-full">
+                  Save Changes
+                </Button>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      </div>
+      <Footer />
     </div>
   );
 };
