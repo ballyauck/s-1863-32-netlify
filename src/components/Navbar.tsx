@@ -10,7 +10,7 @@ const Navbar = () => {
               className="w-full h-full object-contain"
             />
           </div>
-          <span className="font-bold text-xl text-[#dd2526]" style={{ fontFamily: 'Bank Gothic Medium BT' }}>
+          <span className="font-bold text-xl text-[#dd2526]" style={{ fontFamily: 'Banker Square Bold' }}>
             YUCCAN TECHNOLOGIES
           </span>
         </div>
