@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProfileAvatar } from "./ProfileAvatar";
 import { ProfileFormFields } from "./ProfileForm";
-import { ProfileFormValues } from "@/types/profile";
+import { ProfileFormValues, ThemePreference } from "@/types/profile";
 import { profileFormSchema } from "@/schemas/profileSchema";
 import { useProfile } from "@/hooks/useProfile";
 import { useEffect } from "react";
@@ -20,7 +20,7 @@ export const ProfileContent = () => {
       bio: "",
       avatar_url: "",
       email_notifications: true,
-      theme_preference: "light",
+      theme_preference: "light" as ThemePreference,
     },
   });
 
@@ -32,8 +32,8 @@ export const ProfileContent = () => {
           display_name: profile.display_name || "",
           bio: profile.bio || "",
           avatar_url: profile.avatar_url || "",
-          email_notifications: profile.email_notifications,
-          theme_preference: profile.theme_preference || "light",
+          email_notifications: profile.email_notifications ?? true,
+          theme_preference: (profile.theme_preference || "light") as ThemePreference,
         });
       }
     };
