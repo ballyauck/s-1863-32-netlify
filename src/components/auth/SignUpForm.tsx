@@ -8,11 +8,22 @@ import { supabase } from "@/integrations/supabase/client";
 const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (password !== confirmPassword) {
+      toast({
+        title: "Error",
+        description: "Passwords do not match",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -62,7 +73,22 @@ const SignUpForm = () => {
           required
         />
       </div>
-      <Button type="submit" className="w-full" disabled={loading}>
+      <div className="space-y-2">
+        <Label htmlFor="confirmPassword">Confirm Password</Label>
+        <Input
+          id="confirmPassword"
+          type="password"
+          placeholder="Confirm your password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+          required
+        />
+      </div>
+      <Button 
+        type="submit" 
+        className="w-full" 
+        disabled={loading || !password || password !== confirmPassword}
+      >
         {loading ? "Signing up..." : "Sign up"}
       </Button>
     </form>
