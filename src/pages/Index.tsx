@@ -44,6 +44,8 @@ const Index = () => {
 
       <Stats />
 
+      <FAQ />
+
       {/* Contact Section */}
       <section id="contact" className="pt-32 px-6 bg-[#ffffa6]">
         <div className="max-w-7xl mx-auto">
@@ -54,7 +56,6 @@ const Index = () => {
         </div>
       </section>
 
-      <FAQ />
       <Footer />
     </div>
   );
