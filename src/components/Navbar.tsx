@@ -1,23 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import SignInForm from './auth/SignInForm';
-import SignUpForm from './auth/SignUpForm';
 import MobileMenu from './navbar/MobileMenu';
 import DesktopMenu from './navbar/DesktopMenu';
 import Logo from './navbar/Logo';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { supabase } from "@/integrations/supabase/client";
-import { useNavigate } from 'react-router-dom';
-import { Button } from './ui/button';
-import { useToast } from './ui/use-toast';
+import AuthDialog from './auth/AuthDialog';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
-  const { toast } = useToast();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,75 +21,6 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
-  useEffect(() => {
-    // Check initial auth state
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setIsLoggedIn(!!session);
-    });
-
-    // Subscribe to auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setIsLoggedIn(!!session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleSignOut = async () => {
-    try {
-      await supabase.auth.signOut();
-      navigate('/');
-      toast({
-        title: "Success",
-        description: "Successfully signed out",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Error",
-        description: "Failed to sign out",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const AuthDialog = () => {
-    if (isLoggedIn) {
-      return (
-        <Button 
-          variant="ghost" 
-          onClick={handleSignOut}
-          className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-sm font-medium"
-        >
-          Sign Out
-        </Button>
-      );
-    }
-
-    return (
-      <Dialog>
-        <DialogTrigger asChild>
-          <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-sm font-medium">
-            Sign In
-          </button>
-        </DialogTrigger>
-        <DialogContent>
-          <Tabs defaultValue="signin" className="w-full">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="signin">Sign In</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
-            </TabsList>
-            <TabsContent value="signin">
-              <SignInForm />
-            </TabsContent>
-            <TabsContent value="signup">
-              <SignUpForm />
-            </TabsContent>
-          </Tabs>
-        </DialogContent>
-      </Dialog>
-    );
-  };
 
   return (
     <>
