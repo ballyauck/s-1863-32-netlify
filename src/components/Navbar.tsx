@@ -3,10 +3,11 @@ const Navbar = () => {
     <nav className="fixed w-full z-50 px-6 py-4">
       <div className="max-w-[1200px] mx-auto flex justify-between items-center">
         <div className="flex items-center gap-2">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M21 16V8C21 5.23858 18.7614 3 16 3H8C5.23858 3 3 5.23858 3 8V16C3 18.7614 5.23858 21 8 21H16C18.7614 21 21 18.7614 21 16Z" stroke="currentColor" strokeWidth="2"/>
-            <path d="M12 8L8 12L12 16M16 12H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
+          <img 
+            src="/lovable-uploads/2106c699-32e1-46bf-afa5-0f8625a42533.png" 
+            alt="Antimetal Logo" 
+            className="w-8 h-8"
+          />
           <span className="font-bold text-xl text-[#141413]">Antimetal</span>
         </div>
         
