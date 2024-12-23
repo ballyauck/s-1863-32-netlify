@@ -10,7 +10,7 @@ const Navbar = () => {
               className="w-full h-full object-contain"
             />
           </div>
-          <span className="font-bold text-xl text-[#141413]">Antimetal</span>
+          <span className="font-bold text-xl text-[#141413]">Yuccan Technologies</span>
         </div>
         
         <div className="hidden md:flex items-center gap-8">
