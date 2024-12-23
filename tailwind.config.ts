@@ -30,6 +30,7 @@ export default {
         muted: "#A3A299",
         highlight: "#F2FF44",
         surface: "#FAFAF8",
+        'menu-hover': '#3c8f69', // Added new color
       },
       keyframes: {
         "accordion-down": {
