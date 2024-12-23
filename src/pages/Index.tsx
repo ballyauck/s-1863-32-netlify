@@ -45,7 +45,7 @@ const Index = () => {
       <Stats />
 
       {/* Contact Section */}
-      <section id="contact" className="pt-32 px-6">
+      <section id="contact" className="pt-32 px-6 bg-[#ffffa6]">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl font-bold mb-8">Contact Us</h1>
           <p className="text-lg mb-6">
