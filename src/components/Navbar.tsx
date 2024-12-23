@@ -1,4 +1,14 @@
+import { useState } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import SignInForm from './auth/SignInForm';
+
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <nav className="fixed w-full z-50 px-6 py-4">
       <div className="max-w-[1200px] mx-auto flex justify-between items-center">
@@ -19,9 +29,16 @@ const Navbar = () => {
           <a href="#contact" className="menu-link text-[#141413] hover:text-menu-hover transition-colors">Contact Us</a>
         </div>
 
-        <button className="text-[#141413] font-medium hover:text-[#141413]/80 transition-colors">
-          Sign in
-        </button>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+          <DialogTrigger asChild>
+            <button className="text-[#141413] font-medium hover:text-[#141413]/80 transition-colors">
+              Sign in
+            </button>
+          </DialogTrigger>
+          <DialogContent>
+            <SignInForm />
+          </DialogContent>
+        </Dialog>
       </div>
     </nav>
   );
