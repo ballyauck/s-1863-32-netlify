@@ -25,8 +25,8 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Mobile Navbar - Hidden */}
-      <nav className="hidden">
+      {/* Mobile Navbar */}
+      <nav className="fixed w-full z-50 h-[50px] bg-white shadow-sm md:hidden">
         <div className="max-w-[1200px] mx-auto flex justify-between items-center h-full px-4">
           <Logo />
           <Menu 
