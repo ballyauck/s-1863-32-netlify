@@ -25,31 +25,6 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Mobile Navbar */}
-      <nav className="fixed w-full z-50 h-[50px] bg-white shadow-sm md:hidden">
-        <div className="max-w-[1200px] mx-auto flex justify-between items-center h-full px-4">
-          <Logo />
-          <Menu 
-            className="text-primary cursor-pointer" 
-            size={24} 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
-          />
-          <Dialog>
-            <DialogTrigger asChild>
-              <button className="text-primary font-medium hover:text-primary/80 transition-colors">
-                Sign in
-              </button>
-            </DialogTrigger>
-            <DialogContent>
-              <SignInForm />
-            </DialogContent>
-          </Dialog>
-        </div>
-        
-        {/* Mobile Menu */}
-        <MobileMenu isOpen={isMobileMenuOpen} />
-      </nav>
-
       {/* Desktop Navbar */}
       <nav 
         className={`fixed w-full z-50 px-6 h-[50px] transition-all duration-300 hidden md:block ${
