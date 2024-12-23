@@ -18,6 +18,9 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -30,7 +33,7 @@ export default {
         muted: "#A3A299",
         highlight: "#F2FF44",
         surface: "#FAFAF8",
-        'menu-hover': '#3c8f69', // Added new color
+        'menu-hover': '#3c8f69',
       },
       keyframes: {
         "accordion-down": {
