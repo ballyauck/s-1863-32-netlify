@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useNavigate } from "react-router-dom";
 import OTPVerification from "./OTPVerification";
 import SignInFields from "./SignInFields";
 
@@ -12,6 +13,7 @@ const SignInForm = () => {
   const [showResendButton, setShowResendButton] = useState(false);
   const [userId, setUserId] = useState<string>("");
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleResendConfirmation = async () => {
     try {
@@ -75,6 +77,7 @@ const SignInForm = () => {
           title: "Success",
           description: "Successfully signed in!",
         });
+        navigate("/profile");
       }
     } catch (error: any) {
       toast({
@@ -93,6 +96,7 @@ const SignInForm = () => {
       title: "Success",
       description: "Successfully signed in!",
     });
+    navigate("/profile");
   };
 
   if (showOTP) {
