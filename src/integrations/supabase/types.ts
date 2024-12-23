@@ -13,21 +13,21 @@ export type Database = {
         Row: {
           created_at: string
           id: string
-          two_factor_enabled: boolean | null
+          two_factor_enabled: boolean
           two_factor_secret: string | null
           updated_at: string
         }
         Insert: {
           created_at?: string
           id: string
-          two_factor_enabled?: boolean | null
+          two_factor_enabled?: boolean
           two_factor_secret?: string | null
           updated_at?: string
         }
         Update: {
           created_at?: string
           id?: string
-          two_factor_enabled?: boolean | null
+          two_factor_enabled?: boolean
           two_factor_secret?: string | null
           updated_at?: string
         }
