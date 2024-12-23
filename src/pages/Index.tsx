@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import HeroBlockC from "../components/hero-blocks/HeroBlockC";
+import HeroBlockA from "../components/hero-blocks/HeroBlockC";
 import Features from "../components/Features";
 import Stats from "../components/Stats";
 import FAQ from "../components/FAQ";
@@ -9,7 +9,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <HeroBlockC />
+      <HeroBlockA />
       
       {/* About Section */}
       <section id="about" className="pt-32 px-6 bg-[#E9AF76]">
