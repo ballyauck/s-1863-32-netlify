@@ -32,12 +32,24 @@ const Navbar = () => {
         }`}
       >
         <Logo />
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-        >
-          <Menu className="h-6 w-6 text-primary" />
-        </button>
+        <div className="absolute left-1/2 transform -translate-x-1/2">
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+          >
+            <Menu className="h-6 w-6 text-primary" />
+          </button>
+        </div>
+        <Dialog>
+          <DialogTrigger asChild>
+            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-sm font-medium">
+              Sign In
+            </button>
+          </DialogTrigger>
+          <DialogContent>
+            <SignInForm />
+          </DialogContent>
+        </Dialog>
       </nav>
 
       {/* Desktop Navbar */}
