@@ -5,8 +5,8 @@ const Navbar = () => {
         <div className="flex items-center gap-2">
           <div className="w-10 h-8 flex items-center justify-center">
             <img 
-              src="/lovable-uploads/2106c699-32e1-46bf-afa5-0f8625a42533.png" 
-              alt="Antimetal Logo" 
+              src="/lovable-uploads/923f72ac-68ff-4281-b991-9c4d2bde01ba.png" 
+              alt="Yuccan Technologies Logo" 
               className="w-full h-full object-contain"
             />
           </div>
