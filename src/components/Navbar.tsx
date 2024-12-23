@@ -32,7 +32,7 @@ const Navbar = () => {
         }`}
       >
         <Logo />
-        <div className="absolute left-1/2 transform -translate-x-1/2">
+        <div className="flex items-center justify-center flex-grow">
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
