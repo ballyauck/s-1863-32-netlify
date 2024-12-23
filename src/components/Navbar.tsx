@@ -25,6 +25,21 @@ const Navbar = () => {
 
   return (
     <>
+      {/* Mobile Navbar */}
+      <nav 
+        className={`md:hidden fixed w-full z-50 px-4 h-[50px] flex items-center justify-between transition-all duration-300 ${
+          isScrolled ? 'bg-white shadow-sm' : 'bg-transparent'
+        }`}
+      >
+        <Logo />
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+        >
+          <Menu className="h-6 w-6 text-primary" />
+        </button>
+      </nav>
+
       {/* Desktop Navbar */}
       <nav 
         className={`fixed w-full z-50 px-6 h-[50px] transition-all duration-300 hidden md:block ${
@@ -40,6 +55,9 @@ const Navbar = () => {
           <DesktopMenu />
         </div>
       </nav>
+
+      {/* Mobile Menu */}
+      <MobileMenu isOpen={isMobileMenuOpen} />
     </>
   );
 };
