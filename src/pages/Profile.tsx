@@ -5,28 +5,19 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Form } from "@/components/ui/form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
+import { ProfileAvatar } from "@/components/profile/ProfileAvatar";
+import { ProfileFormFields } from "@/components/profile/ProfileForm";
+import { ProfileFormValues, ThemePreference } from "@/types/profile";
 
 const formSchema = z.object({
   display_name: z.string().min(2, "Display name must be at least 2 characters"),
   bio: z.string().max(500, "Bio must be less than 500 characters"),
   avatar_url: z.string().url("Must be a valid URL").or(z.string().length(0)),
   email_notifications: z.boolean(),
-  theme_preference: z.enum(["light", "dark"]),
+  theme_preference: z.enum(["light", "dark"] as const),
 });
 
 const Profile = () => {
@@ -35,14 +26,14 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<ProfileFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       display_name: "",
       bio: "",
       avatar_url: "",
       email_notifications: true,
-      theme_preference: "light",
+      theme_preference: "light" as ThemePreference,
     },
   });
 
@@ -55,7 +46,6 @@ const Profile = () => {
       }
       setUser(user);
       
-      // Fetch profile data
       const { data: profile } = await supabase
         .from("profiles")
         .select("*")
@@ -68,7 +58,7 @@ const Profile = () => {
           bio: profile.bio || "",
           avatar_url: profile.avatar_url || "",
           email_notifications: profile.email_notifications,
-          theme_preference: profile.theme_preference,
+          theme_preference: (profile.theme_preference || "light") as ThemePreference,
         });
       }
       setLoading(false);
@@ -77,7 +67,7 @@ const Profile = () => {
     checkUser();
   }, [navigate, form]);
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: ProfileFormValues) => {
     try {
       const { error } = await supabase
         .from("profiles")
@@ -114,108 +104,15 @@ const Profile = () => {
           <CardTitle>Profile Settings</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="mb-8 flex items-center space-x-4">
-            <Avatar className="h-20 w-20">
-              <AvatarImage src={form.watch("avatar_url")} />
-              <AvatarFallback>
-                {form.watch("display_name")?.charAt(0) || user?.email?.charAt(0)}
-              </AvatarFallback>
-            </Avatar>
-          </div>
+          <ProfileAvatar 
+            avatarUrl={form.watch("avatar_url")}
+            displayName={form.watch("display_name")}
+            email={user?.email}
+          />
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="display_name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Display Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Your display name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="bio"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Bio</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Tell us about yourself"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      Maximum 500 characters
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="avatar_url"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Avatar URL</FormLabel>
-                    <FormControl>
-                      <Input placeholder="https://example.com/avatar.jpg" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="email_notifications"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                    <div className="space-y-0.5">
-                      <FormLabel className="text-base">
-                        Email Notifications
-                      </FormLabel>
-                      <FormDescription>
-                        Receive email notifications about account activity
-                      </FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="theme_preference"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Theme Preference</FormLabel>
-                    <FormControl>
-                      <select
-                        className="w-full rounded-md border border-input bg-background px-3 py-2"
-                        {...field}
-                      >
-                        <option value="light">Light</option>
-                        <option value="dark">Dark</option>
-                      </select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
+              <ProfileFormFields form={form} />
               <Button type="submit" className="w-full">
                 Save Changes
               </Button>
