@@ -23,7 +23,7 @@ const Index = () => {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="pt-32 px-6">
+      <section id="services" className="pt-32 px-6 bg-[#3C8F69]">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl font-bold mb-8">Our Services</h1>
           <p className="text-lg mb-6">
