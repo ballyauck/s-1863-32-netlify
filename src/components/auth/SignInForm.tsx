@@ -12,7 +12,30 @@ const SignInForm = () => {
   const [loading, setLoading] = useState(false);
   const [showOTP, setShowOTP] = useState(false);
   const [otp, setOtp] = useState("");
+  const [showResendButton, setShowResendButton] = useState(false);
   const { toast } = useToast();
+
+  const handleResendConfirmation = async () => {
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: email,
+      });
+      
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Confirmation email has been resent. Please check your inbox.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +48,14 @@ const SignInForm = () => {
         password,
       });
 
-      if (signInError) throw signInError;
+      if (signInError) {
+        // Check if the error is due to unconfirmed email
+        if (signInError.message.includes("Email not confirmed")) {
+          setShowResendButton(true);
+          throw new Error("Please confirm your email address. Check your inbox for the confirmation link or click below to resend it.");
+        }
+        throw signInError;
+      }
 
       // Check if 2FA is enabled for this user
       const { data: profileData, error: profileError } = await supabase
@@ -153,6 +183,17 @@ const SignInForm = () => {
       <Button type="submit" className="w-full" disabled={loading}>
         {loading ? "Signing in..." : "Sign in"}
       </Button>
+      
+      {showResendButton && (
+        <Button
+          type="button"
+          variant="outline"
+          className="w-full mt-2"
+          onClick={handleResendConfirmation}
+        >
+          Resend Confirmation Email
+        </Button>
+      )}
     </form>
   );
 };
