@@ -12,7 +12,7 @@ const Index = () => {
       <HeroBlockC />
       
       {/* About Section */}
-      <section id="about" className="pt-32 px-6">
+      <section id="about" className="pt-32 px-6 bg-[#E9AF76]">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl font-bold mb-8">About Us</h1>
           <p className="text-lg mb-6">
