@@ -7,35 +7,51 @@ import SignUpForm from "./SignUpForm";
 import { useAuth } from "@/contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/components/ui/use-toast";
 
 const AuthDialog = () => {
   const { isLoggedIn, handleSignOut } = useAuth();
   const [displayName, setDisplayName] = useState<string>("");
+  const { toast } = useToast();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (!isLoggedIn) return;
       
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      try {
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
 
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("display_name")
-        .eq("id", user.id)
-        .single();
+        const { data: profile, error } = await supabase
+          .from("profiles")
+          .select("display_name")
+          .eq("id", user.id)
+          .maybeSingle();
 
-      if (profile?.display_name) {
-        setDisplayName(profile.display_name);
+        if (error) {
+          console.error("Error fetching profile:", error);
+          toast({
+            title: "Error",
+            description: "Failed to load profile information",
+            variant: "destructive",
+          });
+          return;
+        }
+
+        if (profile?.display_name) {
+          setDisplayName(profile.display_name);
+        }
+      } catch (error) {
+        console.error("Error in fetchUserProfile:", error);
       }
     };
 
     fetchUserProfile();
-  }, [isLoggedIn]);
+  }, [isLoggedIn, toast]);
 
   if (isLoggedIn) {
     return (
-      <div className="flex flex-col items-start gap-1 space-y-0">
+      <div className="flex flex-col items-start gap-1">
         <Link 
           to="/profile" 
           className="text-sm font-medium text-primary hover:underline w-full text-left"
