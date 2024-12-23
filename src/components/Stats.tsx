@@ -6,7 +6,7 @@ const stats = [
 
 const Stats = () => {
   return (
-    <section className="py-24 px-6 bg-primary text-white">
+    <section className="py-24 px-6 bg-[#3C8F69] text-white">
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-3 gap-12 text-center">
           {stats.map((stat, index) => (
